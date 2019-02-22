@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 
 ##############################
 #    Setup server container
@@ -15,7 +15,7 @@ services:
     ports:
       - ${APP_SERVER_PORT}:${APP_SERVER_PORT}
     volumes:
-      - ./server:/srv/app/admin-serve
+      - ./server/src:/srv/app/admin-server/src
 
 ##############################
 #    Setup client container
