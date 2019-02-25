@@ -1,8 +1,0 @@
-{
-  "name": "docker-node-react-redis",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "https://github.com/aado29/docker-node-react-redis",
-  "author": "Alberto Diaz <aado29@gmail.com>",
-  "license": "MIT"
-}
