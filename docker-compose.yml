@@ -3,8 +3,22 @@ version: '2'
 services:
 
 ##############################
+#    Setup redis container
+##############################
+
+
+
+##############################
 #    Setup server container
 ##############################
+  redis:
+    build: ./redis-data
+    expose:
+      - ${REDIS_PORT}
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+    volumes:
+      - ./redis-data:/srv/app/redis-data
 
   server:
     build: ./server
@@ -13,10 +27,16 @@ services:
     environment:
       API_HOST: ${API_HOST}
       APP_SERVER_PORT: ${APP_SERVER_PORT}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+      DARKSKY_API_KEY: ${DARKSKY_API_KEY}
+      REACT_APP_PORT: ${REACT_APP_PORT}
     ports:
       - ${APP_SERVER_PORT}:${APP_SERVER_PORT}
     volumes:
       - ./server/src:/srv/app/admin-server/src
+    depends_on:
+      - redis
 
 ##############################
 #    Setup client container
@@ -25,6 +45,8 @@ services:
   client:
     build: ./client
     environment:
+      REACT_APP_API_HOST: ${API_HOST}
+      REACT_APP_API_PORT: ${APP_SERVER_PORT}
       PORT: ${REACT_APP_PORT}
     expose:
       - ${REACT_APP_PORT}
